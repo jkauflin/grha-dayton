@@ -9,6 +9,6 @@
  * 2016-03-27 JJK 	Initial version
  *============================================================================*/
 
-include '../hoadb/getHoaPropertiesList2.php';
+include 'hoadb/getHoaPropertiesList2.php';
 
 ?>

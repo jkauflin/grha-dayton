@@ -1,13 +1,14 @@
 <?php
 /*==============================================================================
- * (C) Copyright 2015 John J Kauflin, All rights reserved. 
+ * (C) Copyright 2016 John J Kauflin, All rights reserved. 
  *----------------------------------------------------------------------------
- * DESCRIPTION: Inclue HOADB file to get hoa data
+ * DESCRIPTION: Include the HOADB file to handle payment notifications and
+ * 				make the appropriate database updates
  *----------------------------------------------------------------------------
  * Modification History
- * 2016-03-28 JJK 	Initial version 
+ * 2016-04-26 JJK 	Initial version
  *============================================================================*/
 
-include 'hoadb/getHoaDbData2.php';
+include 'hoadb/handlePaymentNotification.php';
 
 ?>
