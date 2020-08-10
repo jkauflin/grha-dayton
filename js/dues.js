@@ -10,7 +10,7 @@ var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 	//=================================================================================================================
 	// Private variables for the Module
-    var onlinePaymentInstructions = '*** a $4.00 processing fee will be added for online payment via PayPal, or you can pay by contacting GRHA Treasurer Misty Wilker at 937-554-9414 or by email at <b>treasurer@grha-dayton.org</b> (email is preferred) ***';
+    var onlinePaymentInstructions = '*** a <b>$4.00</b> processing fee will be added for online payment via PayPal, or you can pay by contacting GRHA Treasurer Misty Wilker at 937-554-9414 or by email at <b>treasurer@grha-dayton.org</b> (email is preferred) ***';
     var offlinePaymentInstructions = '*** For payment of dues, contact GRHA Treasurer Misty Wilker at 937-554-9414 or by email at <b>treasurer@grha-dayton.org</b> (email is preferred) ***';
 
 	//=================================================================================================================
