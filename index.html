@@ -30,7 +30,7 @@
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="index.html"><img id="header-image" alt="Brand logo photo" src="Media/images/logo-photo.jpg"></a>
-    <a class="navbar-brand d-lg-none" data-toggle="modal" href="#aboutModal">Gander Road HOA</a>
+    <a class="navbar-brand d-lg-none" data-toggle="modal" href="#aboutModal">Gander Rd HOA</a>
     <a class="navbar-brand d-none d-lg-block" data-toggle="modal" href="#aboutModal">Gander Road Homeowners Association</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -38,12 +38,12 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#HomePage"><i class="fa fa-home"></i> Home</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ContactsPage"><i class="fa fa-phone"></i> Contact Us</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Docs"><i class="fa fa-file"></i> Info</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#DuesPage"><i class="fa fa-dollar"></i> Dues</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#CommitteesPage"><i class="fa fa-group"></i> Committees</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Photos"><i class="fa fa-camera"></i> Photos</a></li>
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#HomePage" role="tab"><i class="fa fa-home"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ContactsPage" role="tab"><i class="fa fa-phone"></i> Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" role="tab" data-dir="Docs"><i class="fa fa-file"></i> Info</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#DuesPage" role="tab"><i class="fa fa-dollar"></i> Dues</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#CommitteesPage" role="tab"><i class="fa fa-group"></i> Committees</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" role="tab" data-dir="Photos"><i class="fa fa-camera"></i> Photos</a></li>
         </ul>
     </div>
 </nav>
@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-sm-4 col-lg-3">
                 <div id="DisplayWidth"></div>
-                <h4>Home</h4>
+                <h4 class="d-none d-sm-block">Home</h4>
                 <div class="d-none d-sm-block">
                     <img id="HomePhoto" class="rounded mb-2 ml-2" src="" alt="Quail Hollow sign" width="65%" />
                 </div>
@@ -71,29 +71,21 @@
             <div class="col-sm-4 col-lg-6">
                 <a class="btn btn-danger float-left mt-2 mr-2 link-tile" href="#realtorModal" data-toggle="modal">
                     <i class="fa fa-home fa-2x float-left"></i> Realtors and <br> Title Agents</a>
-
-                <a class="btn btn-success float-left mt-2 mr-2 link-tile" href="" data-toggle="modal">
+                <a id="DuesTabButton" class="btn btn-success float-left mt-2 mr-2 link-tile" href="#">
                     <i class="fa fa-dollar fa-2x float-left"></i> Dues and <br> Liens</a>
-
                 <a class="btn btn-primary float-left mt-2 mr-2 link-tile" href="index.html?media-dir=Docs/Quail%20Call%20(newsletter)" >
                     <i class="fa fa-file-text-o fa-2x float-left"></i> Quail Call <br>newsletter</a>
-
                 <a class="btn btn-warning float-left mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
                     <i class="fa fa-info fa-2x float-left"></i> Welcome <br>message</a>
-
                 <a class="btn btn-info float-left mt-2 mr-2 link-tile" href="#meetingModal" data-toggle="modal">
                     <i class="fa fa-group fa-2x float-left"></i> Monthly <br>meetings</a>
-
                 <a class="btn btn-success float-left mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
                     <i class="fa fa-legal fa-2x float-left"></i> Covenants <br>and By Laws</a>
-
                 <a class="btn btn-danger float-left mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
                     <i class="fa fa-bank fa-2x float-left"></i> Architecture <br>and Zoning</a>
-
                 <a class="btn btn-primary float-left mt-2 mr-2 link-tile d-none d-sm-block" href="#eventModal" >
                     <i class="fa fa-calendar fa-2x float-left"></i> Events / <br>Calendar</a>
-
-                <a class="btn btn-warning float-left mt-2 mr-2 link-tile" data-toggle="tab" href="#ContactsPage">
+                <a id="ContactsTabButton" class="btn btn-warning float-left mt-2 mr-2 link-tile" href="#">
                     <i class="fa fa-phone fa-2x float-left"></i> Contact <br>us</a>
                 
                 <div class="float-left d-none d-sm-block m-3">
@@ -568,17 +560,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
     
     <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=1.005"></script>
-    <script src="js/main.js?ver=3.015"></script>
+    <script src="js/main.js?ver=3.017"></script>
     <script src="js/dues.js?ver=1.004"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56094636-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-56094636-1');
-    </script>
 
 </body>
 </html>
