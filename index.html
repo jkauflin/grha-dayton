@@ -57,7 +57,7 @@
                 <div id="DisplayWidth"></div>
                 <h4>Home</h4>
                 <div class="d-none d-sm-block">
-                    <img id="HomePhoto" class="rounded mb-2 ml-2" src="" alt="Quail Hollow sign" width="80%" />
+                    <img id="HomePhoto" class="rounded mb-2 ml-2" src="" alt="Quail Hollow sign" width="70%" />
                 </div>
                 <div class="border m-1 p-1">
                     <small>
@@ -67,8 +67,8 @@
                         Wilker</a> (937) 554-9414 <br>email: <b>treasurer@grha-dayton.org</b>
                     </small>
                 </div>
-                    <a href="Media/images/grhamap.jpg" target="_blank" class="d-none d-sm-block"> <img
-                    src="Media/images/grhamap.jpg" alt="Gander road homeowners association area map" width="90%" />
+                    <a data-toggle="modal" href="#MapModal" class="d-none d-sm-block"> <img
+                    src="Media/images/grhamap.jpg" width="85%"/>
                 </a>
             </div><!-- End of col 1 -->
 
@@ -104,21 +104,32 @@
                     Our association is a combination of the subdivisions of Quail Hollow
                     and Willow Glen, located in the northeast corner of Dayton, OH.
                 </div>
-                <h4><b>*** Due to COVID-19, Public Meetings have been cancelled for the time being.  
+                <h6><b>*** Due to COVID-19, Public Meetings have been cancelled for the time being.  
                     We are also required to stay off the playground equipment for now.  Please do not use motor vehicles in the green areas ***</b></h4>
-                <h5 class="m-3">The Board will continue to meet virtually and post messages on this website and Facebook</h5>
+                <h6 class="m-3">The Board will continue to meet virtually and post messages on this website and Facebook</h5>
 
             </div> <!-- End of col 2 -->
 
             <div class="col-sm-4 col-lg-3">
                 <div class="d-none d-sm-block">
-                    <img id="CurrentPhoto" src="" class="rounded float-left m-2" alt="gander road current photo" width="90%" />
+                    <img id="CurrentPhoto" src="" class="rounded float-left m-2"  width="80%" alt="gander road current photo"/>
                 </div>
                 <div>
                     <iframe class="d-none d-sm-block m-2"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6128.7265620291455!2d-84.11045893651189!3d39.82127200211821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x884082af06f23d5b%3A0xf754bc44b768561d!2s5001+Gander+Rd+W%2C+Dayton%2C+OH+45424!5e0!3m2!1sen!2sus!4v1458780943912"
-                        width="90%" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                        width="85%" frameborder="0" style="border: 0" allowfullscreen></iframe>
                 </div>
+
+                <h6><i class="fa fa-copyright"></i>2020 Gander Road Homeowners Association</h6>
+                <p>
+                <a data-toggle="modal" href="#PrivacyModal"><i class="fa fa-briefcase"></i> privacy policy</a>
+                </p>
+                <a target="_blank" class="mt-1" href="http://www.facebook.com/GanderRoadHomeownersAssoc">
+                    <img alt="Find us on facebook" src="Media/images/Facebook.png" width="40%"></a>
+                <a target="_blank" class="mt-1" href="https://nextdoor.com/invite/skbhbhwcackpbjrwkuhd">
+                    <img alt="Find us on nextdoor" src="Media/images/nextdoor-badge.png" width="40%"></a>
+
+
             </div><!-- End of col 3 -->
 
         </div><!-- end of row -->
@@ -240,6 +251,7 @@
 </div><!-- end of main container -->
 
 <!-- Footer -->
+<!--
 <nav class="navbar fixed-bottom navbar-light bg-light">
     <div class="container-fluid">
         <h6 class="float-left"><i class="fa fa-copyright"></i>2020 Gander Road Homeowners Association</h6>
@@ -252,6 +264,7 @@
         </div>
     </div>
 </nav>
+-->
 
 <!-- Modal -->
 <div class="modal fade" id="aboutModal" role="dialog">
@@ -272,7 +285,7 @@
                 between the Board of Trustees and the homeowners of the
                 association. <br> 
                 <a href="Media/images/grhamap.jpg" target="_blank">
-                    <img src="Media/images/grhamap.jpg" alt="Gander road homeowners association area map" width="49%" />
+                    <img src="Media/images/grhamap.jpg" width="49%" />
                 </a>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6128.7265620291455!2d-84.11045893651189!3d39.82127200211821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x884082af06f23d5b%3A0xf754bc44b768561d!2s5001+Gander+Rd+W%2C+Dayton%2C+OH+45424!5e0!3m2!1sen!2sus!4v1458780943912"
                     width="49%" frameborder="0" style="border: 0" allowfullscreen></iframe>
@@ -282,6 +295,28 @@
             </div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="MapModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <img class="rounded float-left m-2" src="Media/images/logo-photo.jpg">
+                    GRHA Map
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <a href="Media/images/grhamap.jpg" target="_blank">
+                    <img class="img-fluid" src="Media/images/grhamap.jpg"/>
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
     <div class="modal fade" id="realtorModal" role="dialog">
