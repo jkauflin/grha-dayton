@@ -1,11 +1,9 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
 
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>GRHA</title>
     <meta name="keywords" content="quail hollow, willow glen, grha, gander rd, gander rd homewowners association, gander road, dayton, ohio" />
     <meta name="description" content="This is the web site for the Gander Road Homeowners Association in Quail Hollow, Dayton, OH" />
@@ -17,160 +15,236 @@
     <meta property="og:image" content="http://grha-dayton.org/Media/images/qh-sign.jpg" />
     
     <!-- Place favicon.ico in the root directory -->
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico?ver=1.001">
     <link rel="manifest" href="manifest.json">
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/css/blueimp-gallery.min.css">
-	<link rel="stylesheet" href="css/main.css?ver=3.013">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="css/main.css?ver=4.002">
 </head>
 
 <body>
-
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html"><img id="header-image" alt="Brand logo photo"
-                src="Media/images/logo-photo.jpg"></a> 
-            <a class="navbar-brand visible-xs" style="outline: 0" data-toggle="modal" href="#aboutModal">Gander Road HOA</a>
-            <a class="navbar-brand visible-sm" style="outline: 0" data-toggle="modal" href="#aboutModal">Gander Road HOA</a>
-            <a class="navbar-brand visible-md" style="outline: 0" data-toggle="modal" href="#aboutModal">Gander Road HOA</a>
-            <a class="navbar-brand visible-lg" style="outline: 0" data-toggle="modal" href="#aboutModal">Gander Road Homeowners Association</a>
-        </div> <!-- navbar-header -->
-            
-		<div id="navbar" class="navbar-collapse collapse">
-		    <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#HomePage" data-toggle="tab"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="contacts.html"><i class="fa fa-phone"></i> Contact Us</a></li>
-                <li><a href="#MediaPage" data-dir="Docs" data-toggle="tab"><i class="fa fa-file"></i> Information</a></li>
-                <li><a href="dues.html"><i class="fa fa-dollar"></i> Dues</a></li>
-                <li><a href="committees.html"><i class="fa fa-group"></i> Committees</a></li>
-                <li><a href="#MediaPage" data-dir="Photos" data-toggle="tab"><i class="fa fa-camera"></i> Photos</a></li>
-			</ul>
-		</div> <!-- navbar-collapse (controlled by the collapse toggle button) -->
-	</div> <!-- container -->
-</nav><!-- <nav class="navbar navbar-default navbar-fixed-top"> -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="index.html"><img id="header-image" alt="Brand logo photo" src="Media/images/logo-photo.jpg"></a>
+    <a class="navbar-brand d-lg-none" data-toggle="modal" href="#aboutModal">Gander Road HOA</a>
+    <a class="navbar-brand d-none d-lg-block" data-toggle="modal" href="#aboutModal">Gander Road Homeowners Association</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#HomePage"><i class="fa fa-home"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#ContactsPage"><i class="fa fa-phone"></i> Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Docs"><i class="fa fa-file"></i> Info</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#DuesPage"><i class="fa fa-dollar"></i> Dues</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#CommitteesPage"><i class="fa fa-group"></i> Committees</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MediaPage" data-dir="Photos"><i class="fa fa-camera"></i> Photos</a></li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container-fluid">
 <div class="tab-content">
 
-	<div class="tab-pane active" id="HomePage">
+	<div class="tab-pane show active" id="HomePage">
         <div class="row">
             <div class="col-sm-4 col-lg-3">
                 <div id="DisplayWidth"></div>
                 <h4>Home</h4>
-                <div class="hidden-xs">
-                    <img id="HomePhoto" src="" class="img-rounded" style="margin: 0 0 15px 15px;" alt="Quail Hollow sign" width="200" />
+                <div class="d-none d-sm-block">
+                    <img id="HomePhoto" class="rounded mb-2 ml-2" src="" alt="Quail Hollow sign" width="90%" />
                 </div>
-                <div class="well well-sm">
+                <div class="border m-1 p-1">
                     President: <a href="mailto:president@grha-dayton.org?subject=GRHA Business">John
                         Kauflin</a> (937) 558-5740 <br>email: <b>president@grha-dayton.org</b>
                     <br>Treasurer: <a href="mailto:treasurer@grha-dayton.org?subject=GRHA Business">Misty
                         Wilker</a> (937) 554-9414 <br>email: <b>treasurer@grha-dayton.org</b>
                 </div>
-                    <a href="Media/images/grhamap.jpg" target="_blank" class="hidden-xs"> <img
+                    <a href="Media/images/grhamap.jpg" target="_blank" class="d-none d-sm-block"> <img
                     src="Media/images/grhamap.jpg" alt="Gander road homeowners association area map" width="90%" />
                 </a>
             </div><!-- End of col 1 -->
 
-            <div class="col-sm-4 col-lg-5">
-                <a class="btn btn-lg btn-danger link-tile" href="#realtorModal" data-toggle="modal">
-                    <i class="fa fa-home fa-2x pull-left"></i> Realtors and <br> Title Agents</a>
+            <div class="col-sm-4 col-lg-6">
+                <a class="btn btn-lg btn-danger mt-2 mr-2 link-tile" href="#realtorModal" data-toggle="modal">
+                    <i class="fa fa-home fa-2x float-left"></i> Realtors and <br> Title Agents</a>
 
-                <a class="btn btn-lg btn-success link-tile" href="dues.html" >
-                    <i class="fa fa-dollar fa-2x pull-left"></i> Dues and <br> Liens</a>
+                <a class="btn btn-lg btn-success mt-2 mr-2 link-tile" href="" data-toggle="modal">
+                    <i class="fa fa-dollar fa-2x float-left"></i> Dues and <br> Liens</a>
 
-                <a class="btn btn-lg btn-primary link-tile" href="index.html?media-dir=Docs/Quail%20Call%20(newsletter)" >
-                    <i class="fa fa-file-text-o fa-2x pull-left"></i> Quail Call <br>newsletter</a>
+                <a class="btn btn-lg btn-primary mt-2 mr-2 link-tile" href="index.html?media-dir=Docs/Quail%20Call%20(newsletter)" >
+                    <i class="fa fa-file-text-o fa-2x float-left"></i> Quail Call <br>newsletter</a>
 
-                <a class="btn btn-lg btn-warning link-tile" href="index.html?media-dir=Docs">
-                    <i class="fa fa-info fa-2x pull-left"></i> Welcome <br>message</a>
+                <a class="btn btn-lg btn-warning mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
+                    <i class="fa fa-info fa-2x float-left"></i> Welcome <br>message</a>
 
-                <a class="btn btn-lg btn-info link-tile" href="#meetingModal" data-toggle="modal">
-                    <i class="fa fa-group fa-2x pull-left"></i> Monthly <br>meetings</a>
+                <a class="btn btn-lg btn-info mt-2 mr-2 link-tile" href="#meetingModal" data-toggle="modal">
+                    <i class="fa fa-group fa-2x float-left"></i> Monthly <br>meetings</a>
 
-                <a class="btn btn-lg btn-success link-tile" href="index.html?media-dir=Docs">
-                    <i class="fa fa-legal fa-2x pull-left"></i> Covenants <br>and By Laws</a>
+                <a class="btn btn-lg btn-success mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
+                    <i class="fa fa-legal fa-2x float-left"></i> Covenants <br>and By Laws</a>
 
-                <a class="btn btn-lg btn-danger link-tile" href="index.html?media-dir=Docs">
-                    <i class="fa fa-bank fa-2x pull-left"></i> Architecture <br>and Zoning</a>
+                <a class="btn btn-lg btn-danger mt-2 mr-2 link-tile" href="index.html?media-dir=Docs">
+                    <i class="fa fa-bank fa-2x float-left"></i> Architecture <br>and Zoning</a>
 
-                <a class="btn btn-lg btn-primary link-tile" href="#eventModal" data-toggle="modal">
-                    <i class="fa fa-calendar fa-2x pull-left"></i> Events / <br>Calendar</a>
+                <a class="btn btn-lg btn-primary mt-2 mr-2 link-tile" href="#eventModal" >
+                    <i class="fa fa-calendar fa-2x float-left"></i> Events / <br>Calendar</a>
 
-                <a class="btn btn-lg btn-warning link-tile" href="contacts.html">
-                    <i class="fa fa-phone fa-2x pull-left"></i> Contact <br>us</a>
-                <!--
-                <a class="btn btn-lg btn-success link-tile" href="phplist">
-                    <i class="fa fa-file-text-o fa-2x pull-left"></i> Subscribe to <br>newsletter</a>
-                -->
+                <a class="btn btn-lg btn-warning mt-2 mr-2 link-tile" data-toggle="tab" href="#ContactsPage">
+                    <i class="fa fa-phone fa-2x float-left"></i> Contact <br>us</a>
 
-                <div class="hidden-xs" style="margin: 20px;">You have found the web site of the Gander Road Homeowners Association. 
+                <div class="d-none d-sm-block m-3">You have found the web site of the Gander Road Homeowners Association. 
                     Our association is a combination of the subdivisions of Quail Hollow
                     and Willow Glen, located in the northeast corner of Dayton, OH.
                 </div>
                 <h4><b>*** Due to COVID-19, Public Meetings have been cancelled for the time being.  
                     We are also required to stay off the playground equipment for now.  Please do not use motor vehicles in the green areas ***</b></h4>
-                <h5>The Board will continue to meet virtually and post messages on this website and Facebook</h5>
+                <h5 class="m-3">The Board will continue to meet virtually and post messages on this website and Facebook</h5>
 
             </div> <!-- End of col 2 -->
 
-            <div class="col-sm-4 col-lg-4">
-                <div class="hidden-xs">
-                    <img id="CurrentPhoto" src="" class="img-rounded" style="margin: 10px 0 10px 15px;"
-                        alt="gander road current photo" width="300" />
+            <div class="col-sm-4 col-lg-3">
+                <div class="d-none d-sm-block">
+                    <img id="CurrentPhoto" src="" class="rounded float-left m-2" alt="gander road current photo" width="90%" />
                 </div>
-                <div style="margin: 10px 10px 10px 0;">
-                    <iframe class="hidden-xs"
+                <div>
+                    <iframe class="d-none d-sm-block m-2"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6128.7265620291455!2d-84.11045893651189!3d39.82127200211821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x884082af06f23d5b%3A0xf754bc44b768561d!2s5001+Gander+Rd+W%2C+Dayton%2C+OH+45424!5e0!3m2!1sen!2sus!4v1458780943912"
-                        width="320" height="245" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                        width="90%" frameborder="0" style="border: 0" allowfullscreen></iframe>
                 </div>
             </div><!-- End of col 3 -->
 
         </div><!-- end of row -->
 	</div><!-- end of Home tab -->
 
-	<div class="tab-pane" id="MediaPage">
+    <div class="tab-pane" id="ContactsPage">
+        All questions regarding the status of dues payments and/or liens on
+        a particular property should be directed to our Treasurer,
+        <a href="mailto:treasurer@grha-dayton.org?subject=GRHA Business">
+            <b>Misty Wilker</b></a>, (937) 554-9414, email: <b>treasurer@grha-dayton.org</b>
+        <br>
+        Email contact is preferred and usually the best way to get her. Like most of the board,
+        she has a full time day job, so don't expect an answer immediately.
+        <div class="well" style="margin-top: 10px;">
+            Gander Road Homeowners Association </br>P.O. Box 24763 </br>Dayton, OH 45424-4763
+        </div>
+        GRHA Board of Trustees are volunteer positions filled by member
+        residents.
+        
+        <h4>Your Trustees</h4>
+
+    </div><!-- end of Contacts tab -->
+
+    <div class="tab-pane" id="DuesPage">
+        <a class="btn btn-lg btn-success" href="Media/Docs/Why%20do%20I%20have%20to%20pay%20dues.pdf" target="_blank"
+            style="margin-bottom: 5px;">
+            <i class="fa fa-dollar float-left"></i> Why do I have to pay dues</a>
+        
+        <a class="btn btn-lg btn-success" href="Media/Docs/GRHA%20Dues%20and%20Liens.pdf" target="_blank">
+        <i class="fa fa-dollar float-left"></i> Dues and Lien info</a>
+
         <div class="row">
-			<div class="hidden-xs col-sm-5 col-md-3">
-				<h4 id=MediaHeader></h4>
-				<div id="MediaMenu" class="panel-group"></div>
-			</div>
-			<div class="col-sm-7 col-md-9">
-                <div id="MediaConfig" class="pull-right"></div>
-				<ol id="MediaBreadcrumbs" class="breadcrumb"></ol>
-				<div id="MediaFolders"></div>
+            <div class="col-sm-4 col-md-3">
+                <h4>Dues Checker</h4>
+                <div id="DuesSearchInput">
+                    <div class="form-group">
+                        <input type="text" class="form-control resetval" name="address" id="address"
+                            placeholder="Property Address (or just the house number)">
+                    </div>
+                    <button id="DuesSearchButton" type="button" class="btn btn-primary">Search</button>
+                    <button data-toggle="modal" href="#duesHelpModal" class="btn btn-danger">HELP</button>
+                </div>
+            </div>
+        
+            <div class="col-sm-8 col-md-9">
+                <h4>Properties List</h4>
+                <div class="ajaxError"></div>
+                <div class="table-responsive">
+                    <table id="PropertyListDisplay" class="table table-striped table-sm">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- end of Dues tab -->
+
+    <div class="tab-pane" id="CommitteesPage">
+        <h4>Public Relations</h4>
+        The Public Relations Committee takes care of the various events that the GRHA hosts. We have an Easter Event,
+        a Spring Garage Sale, a Halloween Event, Halloween Donut stations, and a Christmas decorating contest.
+        
+        <h4>Architectural Control</h4>
+        Our neighborhood has an Architectural Control Committee put in place by the Board of Trustees in accordance with our
+        DECLARATION
+        OF COVENANTS. A set of Architectural Guidelines has been developed. In accordance with the Declaration ALL external
+        construction
+        on any lot must be submitted to the Architectural Control Committee for approval before the construction begins.
+        This includes but is not limited to: fences, decks, patio rooms, and sheds. Properties are also subject to the City of
+        Dayton
+        Zoning Code, which may require permits for building.
+        
+        <h4>Green Areas</h4>
+        The Green Areas of the GRHA are 7 different park areas totaling approximately 36 acres of space. Several of the Green
+        Areas include
+        playground equipment and there are also 2 with basketball courts and one with a soccer field. Some of the areas are only
+        grasslands
+        with trees and bushes. All of these areas are for the usage and enjoyment of all of the members of the association. As
+        the single
+        biggest asset of the association, the Green Areas take up much of the board's energy and time to administer.
+        
+        <h4>Welcoming</h4>
+        The Welcoming committee maintains the welcome packages that we deliver to new members when we get notice of sales on
+        properties.
+        
+        <h4>Quail Call Newsletter</h4>
+        The Quail Call newsletter is the primary communication method of the Gander Road Homeowners Association. We do a Quail
+        Call every
+        month except January and it is printed and hand delivered to all 543 members of the GRHA. In the newsletter we do a
+        President's
+        message, calendar of events, meeting minutes from mothly board meetings, neighborhood news and happenings, helpful tips,
+        member
+        classified ads, paid ads, and a list of Trustee and Committee contacts.
+        
+        <h4>Nominating</h4>
+        The GRHA is managed by volunteer trustees who are elected at the annual meeting of the general membership. GRHA trustees
+        receive no
+        monetary compensation for their efforts, but authorized expenses are reimbursed. However, trustees help our neighborhood
+        tremendously and have opportunities to work with their neighbors and community leaders.
+        <br> Nominees must be a member, in good standing, of the Gander Road Homeowners Association.
+    </div><!-- end of Comittees tab -->
+
+    <div class="tab-pane" id="MediaPage">
+        <div class="row">
+            <div class="col-sm-5 col-md-3 d-none d-sm-block">
+                <h4 id=MediaHeader></h4>
+                <div id="MediaMenu" class="panel-group"></div>
+            </div>
+            <div class="col-sm-7 col-md-9">
+                <div id="MediaConfig" class="float-right m-2"></div>
+                <ol id="MediaBreadcrumbs" class="breadcrumb mt-2 p-1"></ol>
+                <div id="MediaFolders"></div>
                 <div id="MediaThumbnails"></div>
             </div>
-		</div><!-- row -->	                
-	</div><!-- end of Detail -->
+        </div><!-- row -->
+    </div><!-- end of Media tab -->
 
 </div><!-- end of main tab content -->
 </div><!-- end of main container -->
 
 <!-- Footer -->
-<nav class="navbar navbar-default navbar-fixed-bottom well-sm">
-    <div class="container">
-        <i class="fa fa-copyright"></i>2020 Gander Road Homeowners Association
-        <a href="privacy.html"><i class="fa fa-briefcase"></i> privacy policy</a>
-
-        <div class="pull-right hidden-xs">
-            <!--
-            <a class="btn btn-success link-tile" href="phplist">
-                <i class="fa fa-file-text-o fa-2x pull-left"></i> Unsubscribe <br>to newsletter</a>
-            -->
-
+<nav class="navbar fixed-bottom navbar-light bg-light">
+    <div class="container-fluid">
+        <h6 class="float-left"><i class="fa fa-copyright"></i>2020 Gander Road Homeowners Association</h6>
+        <a class="float-left ml-2" data-toggle="modal" href="#PrivacyModal"><i class="fa fa-briefcase"></i> privacy policy</a>
+        <div class="float-right d-none d-sm-block">
             <a target="_blank" href="http://www.facebook.com/GanderRoadHomeownersAssoc"> 
-                <img style="margin-right: 10px;" alt="Find us on facebook" src="Media/images/Facebook.png"></a> 
+                <img class="mr-2" alt="Find us on facebook" src="Media/images/Facebook.png"></a> 
             <a target="_blank" href="https://nextdoor.com/invite/skbhbhwcackpbjrwkuhd"> 
                 <img alt="Find us on nextdoor" src="Media/images/nextdoor-badge.png"></a>
         </div>
@@ -182,12 +256,12 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
+                <h4 class="modal-title">
+                    <img class="rounded float-left m-2" src="Media/images/logo-photo.jpg">
+                    Gander Road Homeowners Association
+                </h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-            <h4 class="modal-title">
-                <img style="margin: -10px 5px 0 10px;" src="Media/images/logo-photo.jpg"> 
-                Gander Road Homeowners Association
-            </h4>
             <div class="modal-body">
                 You have found the web site of the Gander Road Homeowners
                 Association. Our association is a combination of the subdivisions
@@ -196,10 +270,10 @@
                 between the Board of Trustees and the homeowners of the
                 association. <br> 
                 <a href="Media/images/grhamap.jpg" target="_blank">
-                    <img src="Media/images/grhamap.jpg" alt="Gander road homeowners association area map" width="300" />
+                    <img src="Media/images/grhamap.jpg" alt="Gander road homeowners association area map" width="49%" />
                 </a>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6128.7265620291455!2d-84.11045893651189!3d39.82127200211821!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x884082af06f23d5b%3A0xf754bc44b768561d!2s5001+Gander+Rd+W%2C+Dayton%2C+OH+45424!5e0!3m2!1sen!2sus!4v1458780943912"
-                    width="320" height="245" frameborder="0" style="border: 0" allowfullscreen></iframe>
+                    width="49%" frameborder="0" style="border: 0" allowfullscreen></iframe>
             </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -212,11 +286,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">
-                        <img style="margin-top: -10px; margin-right: 5px;" Brand logo photo"
-                            src="Media/images/logo-photo.jpg"> Treasurer info for Realtors and Title Agents
+                        <img class="mr-1" src="Media/images/logo-photo.jpg"> Treasurer info for Realtors and Title Agents
                     </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
     
                 <div class="modal-body">
@@ -245,11 +318,10 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">
-                        <img style="margin-top: -10px; margin-right: 5px;" Brand logo photo"
-                                src="Media/images/logo-photo.jpg"> Monthly Trustee meetings
+                        <img class="mr-1" src="Media/images/logo-photo.jpg"> Monthly Trustee meetings
                     </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     The GRHA Board of Trustees meets the 2nd Thursday of every month
@@ -263,7 +335,7 @@
                     <br>
                     <h4><b>Meeting Minutes can be found in the Quail Call newsletter</b></h4>
                     <h4><b>*** Due to COVID-19, Public Meetings have been cancelled for the time being ***</b></h4>
-                    <h5>The Board will continue to meet virtually and post messages on this website and Facebook</h5>
+                    <h5 class="m-3">The Board will continue to meet virtually and post messages on this website and Facebook</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -276,11 +348,10 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">
-                            <img style="margin-top: -10px; margin-right: 5px;" Brand logo photo"
-                                src="Media/images/logo-photo.jpg"> Events / Calendar
+                            <img class="mr-1" src="Media/images/logo-photo.jpg"> Events / Calendar
                         </h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
                         The GRHA hosts the following events during the year.  In addition we sometimes schedule 
@@ -330,6 +401,117 @@
             </div>
         </div>
 
+    <div class="modal fade" id="duesHelpModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <img style="margin-top: -10px; margin-right: 5px;" Brand logo photo"
+                            src="Media/images/logo-photo.jpg"> Dues Help Information
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h5>Enter your address (or just house number) in the box that
+                        says Property Address, and hit Enter or click Search</h5>
+                    <h5>Click on the green "Dues Statement" button for your
+                        property to check your outstanding amount</h5>
+                    <h5>The PayPal button will be on the statement for you to pay
+                        online as long as the only outstanding amount is the current
+                        year's dues. You do not need a PayPal account to use the online payment service
+                        but the GRHA adds a $4.00 service fee to cover processing fees from Paypal.
+                    </h5>
+                    <h5>
+                        <b>IF you have liens and/or past due assessments:</b>
+                    </h5>
+                    <h5>Please contact the treasurer at treasurer@grha-dayton.org
+                        for a PayPal invoice if you would like to pay outstanding dues online, however
+                        there is a processing fee added by PayPal for this special invoice
+                    </h5>
+                    <h5>Contact the treasurer to halt additional interest for
+                        accruing if you will be mailing in a check for payment (payment
+                        amount is good for 30 days, then interest begins to accrue again)</h5>
+                </div>
+    
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="duesStatementModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <img style="margin-top: -10px; margin-right: 5px;" src="Media/images/logo-photo.jpg"> GRHA Dues
+                        Statement
+                    </h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div id="DuesStatementContent" class="modal-body">
+                    <div id="DuesStatementDownloadLinks" class="float-right"></div>
+                    <div class="ajaxError"></div>
+                    <table id="DuesStatementPropertyTable" class="table table-striped table-sm">
+                        <tbody>
+                        </tbody>
+                    </table>
+    
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-3">
+                            <div id="PayDues"></div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div id="PayDuesInstructions"></div>
+                        </div>
+                    </div>
+    
+                    <h4>Total Due calculation details</h4>
+                    <table id="DuesStatementCalculationTable" class="table table-striped table-sm">
+                        <tbody>
+                        </tbody>
+                    </table>
+    
+                    <h4>Payment history</h4>
+                    <table id="DuesStatementAssessmentsTable" class="table table-striped table-sm">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /DuesStatementPage -->
+
+    <div class="modal fade" id="PrivacyModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <img class="mr-1" src="Media/images/logo-photo.jpg"> Privacy Policy
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        No data will be shared with any other entity except for the purposes of administration of the HOA.
+                    </p>
+                    <p>
+                        User data will not be shared.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
 	<div id="blueimp-gallery" class="blueimp-gallery">
 		<div class="slides"></div>
@@ -344,17 +526,25 @@
 
     <!-- Bootstrap core JavaScript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js" crossorigin="anonymous"
-        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
+    
+    <script src="vendor/jkauflin/jjkgallery/mediagallery.js?ver=1.005"></script>
+    <script src="js/main.js?ver=3.014"></script>
+    <script src="js/dues.js?ver=1.003"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56094636-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-56094636-1');
     </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"
-        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-    </script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.35.0/js/blueimp-gallery.min.js"></script>
-    <script src="MediaGallery/mediagallery.js?ver=1.070"></script>
-    <script src="js/main.js?ver=3.012"></script>
-    <script src="js/googleAnalytics.js?ver=1.000"></script>
-    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
 </body>
 </html>

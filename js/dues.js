@@ -6,7 +6,7 @@
  * Modification History
  * 2020-03-15 JJK   Initial version - moved from main.js to here
  *============================================================================*/
-var main = (function () {
+var dues = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 	//=================================================================================================================
 	// Private variables for the Module
@@ -20,13 +20,6 @@ var main = (function () {
 	//=================================================================================================================
     // Bind events
     
-    // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-    $document.on('click', '.navbar-collapse.in', function (e) {
-        if ($(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle') {
-            $(this).collapse('hide');
-        }
-    });
-
 	//=================================================================================================================
 	// Module methods
 

@@ -1,0 +1,56 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d9794148f8b00d872a87df622aabfb20",
+    "packages": [
+        {
+            "name": "jkauflin/jjkgallery",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jkauflin/MediaGallery.git",
+                "reference": "fca40acc552f4196304801d0371d76d06971f981"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/fca40acc552f4196304801d0371d76d06971f981",
+                "reference": "fca40acc552f4196304801d0371d76d06971f981",
+                "shasum": ""
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "jkauflin\\jjkgallery\\": "/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John J Kauflin",
+                    "email": "johnkauflin@gmail.com"
+                }
+            ],
+            "description": "Web Media Gallery display for photos, videos, music, and docs",
+            "support": {
+                "issues": "https://github.com/jkauflin/MediaGallery/issues",
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.1"
+            },
+            "time": "2020-12-20T13:06:26+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
