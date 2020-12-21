@@ -38,7 +38,7 @@ var main = (function () {
     });
 
     // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
-    $document.on("click", ".link-tile,.link-tile-sm", function (event) {
+    $document.on("click", ".link-tile-tab", function (event) {
         var $this = $(this);
         event.preventDefault();
         var targetTabPage = $this.attr('href');
