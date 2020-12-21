@@ -144,19 +144,19 @@ var main = (function () {
                 tr += '<tr>';
                 tr += '<th>Row</th>';
                 tr += '<th>Parcel Location</th>';
-                tr += '<th class="hidden-xs"> Parcel Id</th>';
-                tr += '<th class="hidden-xs hidden-sm">Lot No</th>';
-                tr += '<th class="hidden-xs hidden-sm">Sub Div</th>';
+                tr += '<th class="d-none d-sm-table-cell"> Parcel Id</th>';
+                tr += '<th class="d-none d-lg-table-cell">Lot No</th>';
+                tr += '<th class="d-none d-lg-table-cell">Sub Div</th>';
                 tr += '<th>Dues Statement</th>';
                 tr += '</tr>';
             }
             tr += '<tr>';
             tr += '<td>' + rowId + '</td>';
             tr += '<td>' + hoaPropertyRec.parcelLocation + '</td>';
-            tr += '<td class="hidden-xs">' + hoaPropertyRec.parcelId + '</td>';
-            tr += '<td class="hidden-xs hidden-sm">' + hoaPropertyRec.lotNo + '</td>';
-            tr += '<td class="hidden-xs hidden-sm">' + hoaPropertyRec.subDivParcel + '</td>';
-            tr += '<td><button type="button" data-parcelId="' + hoaPropertyRec.parcelId + '" class="btn btn-success btn-xs DuesStatement">Dues Statement</button></td>';
+            tr += '<td class="d-none d-sm-table-cell">' + hoaPropertyRec.parcelId + '</td>';
+            tr += '<td class="d-none d-lg-table-cell">' + hoaPropertyRec.lotNo + '</td>';
+            tr += '<td class="d-none d-lg-table-cell">' + hoaPropertyRec.subDivParcel + '</td>';
+            tr += '<td><button type="button" data-parcelId="' + hoaPropertyRec.parcelId + '" class="btn btn-success btn-sm DuesStatement">Dues Statement</button></td>';
             tr += '</tr>';
         });
 
