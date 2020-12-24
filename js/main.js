@@ -52,6 +52,16 @@ var main = (function () {
     });
     */
 
+    // Check if a Tab name is passed as a parameter on the URL and navigate to it
+    var results = new RegExp('[\?&]tab=([^&#]*)').exec(window.location.href);
+    if (results != null) {
+        var tabName = results[1] || 0;
+        //console.log("tabName = " + tabName);
+        var targetTabPage = tabName + 'Page';
+        $(".nav-link.active").removeClass("active");
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
+    }
 
     //Replace every ascii character except decimal and digits with a null, and round to 2 decimal places
     var nonMoneyCharsStr = "[\x01-\x2D\x2F\x3A-\x7F]";

@@ -1,4 +1,13 @@
+/* JJK 3/15/2020 */
+.link-tile {
+    width: 175px;
+}
+.link-tile-sm {
+    width: 130px;
+}
+
 /* Turn off the outline on clicks to brand anchors */
+/*
 a.navbar-brand {
 	outline: 0;
 }
@@ -27,12 +36,4 @@ a:active {
 li {
 	list-style-type: none;
 }
-
-/* JJK 3/15/2020 */
-.link-tile {
-    width: 175px;
-}
-.link-tile-sm {
-    width: 130px;
-}
-
+*/
