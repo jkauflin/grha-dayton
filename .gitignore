@@ -7,4 +7,6 @@ paypal*.*
 desktop.ini
 *.log
 error_log
+LOG_FILE
 vendor
+.vscode/

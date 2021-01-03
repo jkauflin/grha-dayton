@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2015,2020 John J Kauflin, All rights reserved.
+ * (C) Copyright 2015,2020,2021 John J Kauflin, All rights reserved.
  *----------------------------------------------------------------------------
  * DESCRIPTION:
  *----------------------------------------------------------------------------
@@ -17,19 +17,15 @@
  *                  Media folder for all photos and docs
  * 2020-03-15 JJK   Moved the dues stuff to dues.js
  * 2020-12-21 JJK   Moved dues stuff back here and added link-time handling
+ * 2021-01-02 JJK   Modified for new Paypal API rather than smart button
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 
-    //=================================================================================================================
-	// Private variables for the Module
-    var onlinePaymentInstructions = '*** a <b>$4.00</b> processing fee will be added for online payment via PayPal, or you can pay by contacting GRHA Treasurer Misty Wilker at 937-554-9414 or by email at <b>treasurer@grha-dayton.org</b> (email is preferred) ***';
-    var offlinePaymentInstructions = '*** For payment of dues, contact GRHA Treasurer Misty Wilker at 937-554-9414 or by email at <b>treasurer@grha-dayton.org</b> (email is preferred) ***';
-
 	//=================================================================================================================
 	// Variables cached from the DOM
     var $document = $(document);
-    
+
 	//=================================================================================================================
     // Bind events
     // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
@@ -41,103 +37,38 @@ var main = (function () {
     $document.on("click", ".link-tile-tab", function (event) {
         var $this = $(this);
         event.preventDefault();
-        var targetTabPage = $this.attr('href');
-        $(".nav-link.active").removeClass("active");
-        $('.navbar-nav a[href="'+targetTabPage+'"]').tab('show')
-        $('.navbar-nav a[href="'+targetTabPage+'"]').addClass('active');
+        var targetTab = $this.attr('data-dir');
+        util.displayTabPage(targetTab);
     });
-
-    /*
-    $document.on('shown.bs.tab', 'a[data-toggle="tab"]', function () {
-    });
-    */
 
     // Check if a Tab name is passed as a parameter on the URL and navigate to it
     var results = new RegExp('[\?&]tab=([^&#]*)').exec(window.location.href);
     if (results != null) {
         var tabName = results[1] || 0;
-        //console.log("tabName = " + tabName);
-        var targetTabPage = tabName + 'Page';
-        $(".nav-link.active").removeClass("active");
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
-    }
-
-    //Replace every ascii character except decimal and digits with a null, and round to 2 decimal places
-    var nonMoneyCharsStr = "[\x01-\x2D\x2F\x3A-\x7F]";
-    //"g" global so it does more than 1 substitution
-    var regexNonMoneyChars = new RegExp(nonMoneyCharsStr, "g");
-    function formatMoney(inAmount) {
-        var inAmountStr = '' + inAmount;
-        inAmountStr = inAmountStr.replace(regexNonMoneyChars, '');
-        return parseFloat(inAmountStr).toFixed(2);
-    }
-
-    // Helper functions for setting UI components from data
-    function setBoolText(inBool) {
-        var tempStr = "NO";
-        if (inBool) {
-            tempStr = "YES";
-        }
-        return tempStr;
-    }
-    function setCheckbox(checkVal) {
-        var tempStr = '';
-        if (checkVal == 1) {
-            tempStr = 'checked=true';
-        }
-        return '<input type="checkbox" ' + tempStr + ' disabled="disabled">';
-    }
-    //function setCheckboxEdit(checkVal, idName) {
-    function setCheckboxEdit(idName, checkVal) {
-        var tempStr = '';
-        if (checkVal == 1) {
-            tempStr = 'checked=true';
-        }
-        return '<input id="' + idName + '" type="checkbox" ' + tempStr + '>';
-    }
-    function setInputText(idName, textVal, textSize) {
-        return '<input id="' + idName + '" name="' + idName + '" type="text" class="form-control input-sm resetval" value="' + textVal + '" size="' + textSize + '" maxlength="' + textSize + '">';
-    }
-    function setTextArea(idName, textVal, rows) {
-        return '<textarea id="' + idName + '" class="form-control input-sm" rows="' + rows + '">' + textVal + '</textarea>';
-    }
-    function setInputDate(idName, textVal, textSize) {
-        return '<input id="' + idName + '" type="text" class="form-control input-sm Date" value="' + textVal + '" size="' + textSize + '" maxlength="' + textSize + '" placeholder="YYYY-MM-DD">';
-    }
-    function setSelectOption(optVal, displayVal, selected, bg) {
-        var tempStr = '';
-        if (selected) {
-            tempStr = '<option class="' + bg + '" value="' + optVal + '" selected>' + displayVal + '</option>';
-        } else {
-            tempStr = '<option class="' + bg + '" value="' + optVal + '">' + displayVal + '</option>';
-        }
-        return tempStr;
+        util.displayTabPage(tabName);
     }
 
     // Respond to any change in values and call service
     $("#DuesSearchInput").change(function () {
         $("#PropertyListDisplay tbody").html("");
         // Get the list
-        $.getJSON("getHoaPropertiesListProxy.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
+        $.getJSON("hoadb/getHoaPropertiesList2.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
             displayPropertyList(hoaPropertyRecList);
         });
-        event.stopPropagation();
     });
 
     // Respond to the Search button click (because I can't figure out how to combine it with input change)
     $document.on("click", "#DuesSearchButton", function () {
         $("#PropertyListDisplay tbody").html("");
         // Get the list
-        $.getJSON("getHoaPropertiesListProxy.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
+        $.getJSON("hoadb/getHoaPropertiesList2.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
             displayPropertyList(hoaPropertyRecList);
         });
-        event.stopPropagation();
     });
 
     $document.on("click", ".DuesStatement", function () {
         var $this = $(this);
-        $.getJSON("getHoaDbDataProxy.php", "parcelId=" + $this.attr("data-parcelId"), function (hoaRec) {
+        $.getJSON("hoadb/getHoaDbData2.php", "parcelId=" + $this.attr("data-parcelId"), function (hoaRec) {
             formatDuesStatementResults(hoaRec);
             // Display the modal window with the iframe
             $("#duesStatementModal").modal("show");
@@ -189,24 +120,23 @@ var main = (function () {
         tr += '<tr><th>City State Zip: </th><td>' + hoaRec.Property_City + ', ' + hoaRec.Property_State + ' ' + hoaRec.Property_Zip + '</td></tr>';
 
         var tempTotalDue = '' + hoaRec.TotalDue;
-        tr += '<tr><th>Total Due: </th><td>$' + formatMoney(tempTotalDue) + '</td></tr>';
+        tr += '<tr><th>Total Due: </th><td>$' + util.formatMoney(tempTotalDue) + '</td></tr>';
         $("#DuesStatementPropertyTable tbody").html(tr);
 
-        var tempDuesAmt = formatMoney(hoaRec.assessmentsList[0].DuesAmt);
+        var tempDuesAmt = util.formatMoney(hoaRec.assessmentsList[0].DuesAmt);
 
         // If enabled, payment button and instructions will have values, else they will be blank if online payment is not allowed
         if (hoaRec.TotalDue > 0) {
             // Only offer online payment if total due is just the current assessment (i.e. prior year due needs to contact the Treasurer)
             if (tempDuesAmt == hoaRec.TotalDue) {
-                $("#PayDues").html(hoaRec.paymentButton);
-                if (hoaRec.paymentButton != '') {
-                    $("#PayDuesInstructions").html(onlinePaymentInstructions);
-                } else {
-                    $("#PayDuesInstructions").html(offlinePaymentInstructions);
-                }
-            } else {
-                $("#PayDuesInstructions").html(offlinePaymentInstructions);
+                $("#PayDues").append(
+                    $('<a>')
+                        .attr('href', "payDues.html?parcelId=" + hoaRec.Parcel_ID)
+                        .prop('class', 'btn btn-success m-2 link-tile')
+                        .append($('<i>').prop('class', "fa fa-usd float-left mr-1").html(' Click HERE to make payment online'))
+                );
             }
+            $("#PayDuesInstructions").prop('class', "mb-3").html(hoaRec.paymentInstructions);
         }
 
         tr = '';
@@ -248,9 +178,9 @@ var main = (function () {
             tempDuesAmt = '' + rec.DuesAmt;
             tr = tr + '<tr>';
             tr = tr + '<td>' + rec.FY + '</a></td>';
-            tr = tr + '<td>' + formatMoney(tempDuesAmt) + '</td>';
+            tr = tr + '<td>' + util.formatMoney(tempDuesAmt) + '</td>';
             tr = tr + '<td>' + rec.DateDue.substring(0, 10) + '</td>';
-            tr = tr + '<td>' + setCheckbox(rec.Paid) + '</td>';
+            tr = tr + '<td>' + util.setCheckbox(rec.Paid) + '</td>';
             tr = tr + '<td>' + rec.DatePaid.substring(0, 10) + '</td>';
             tr = tr + '</tr>';
         });
