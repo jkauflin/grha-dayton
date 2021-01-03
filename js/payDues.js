@@ -42,7 +42,7 @@ var payDues = (function () {
             //console.log("hoaRec.Parcel_ID = "+hoaRec.Parcel_ID);
             if (hoaRec.TotalDue == 0) {
                 $PayDuesMessage.html("No Dues are currently owed on this property");
-            } else if (hoaRec.TotalDue != hoaRec.assessmentsList[0].DuesAmt) {
+            } else if (hoaRec.TotalDue != util.formatMoney(hoaRec.assessmentsList[0].DuesAmt)) {
                 $PayDuesMessage.html("More than current year dues are owed on this property - contact Treasurer");
             } else {
                 var paymentValue = hoaRec.TotalDue + hoaRec.paymentFee;
