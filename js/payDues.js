@@ -7,6 +7,7 @@
  * Modification History
  * 2021-01-01 JJK 	Initial version (seperated from main page to implement
  *                  newest Paypal API integration and button rendering)
+ * 2021-02-13 JJK   Added parcelId after FY in the CustomId
  *============================================================================*/
 var payDues = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -68,7 +69,7 @@ var payDues = (function () {
                                     value: paymentValue
                                 },
                                 description: hoaRec.assessmentsList[0].FY+' Dues and processing fee for property at '+hoaRec.Parcel_Location,
-                                custom_id: hoaRec.assessmentsList[0].FY
+                                custom_id: hoaRec.assessmentsList[0].FY+','+parcelId
                             }]
                         });
                     },
