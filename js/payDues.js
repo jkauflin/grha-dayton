@@ -8,6 +8,7 @@
  * 2021-01-01 JJK 	Initial version (seperated from main page to implement
  *                  newest Paypal API integration and button rendering)
  * 2021-02-13 JJK   Added parcelId after FY in the CustomId
+ * 2021-07-17 JJK   Added money format around processing fee
  *============================================================================*/
 var payDues = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -47,9 +48,8 @@ var payDues = (function () {
                 $PayDuesMessage.html("More than current year dues are owed on this property - contact Treasurer");
             } else {
                 var paymentValue = hoaRec.TotalDue + hoaRec.paymentFee;
-
                 $PayDuesTitle.html("Pay HOA dues for property at "+hoaRec.Parcel_Location);
-                $PayDuesTitle2.html("$"+hoaRec.TotalDue+" (Dues) + $"+hoaRec.paymentFee
+                $PayDuesTitle2.html("$"+hoaRec.TotalDue+" (Dues) + $"+util.formatMoney(hoaRec.paymentFee)
                     +" (Processing Fee) = $"+util.formatMoney(paymentValue)+" Total");
 
                 // Use the Paypal javascript SDK to render buttons for dues payment, and respond to approval
