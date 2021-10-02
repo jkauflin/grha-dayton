@@ -9,6 +9,8 @@
  *                  newest Paypal API integration and button rendering)
  * 2021-02-13 JJK   Added parcelId after FY in the CustomId
  * 2021-07-17 JJK   Added money format around processing fee
+ * 2021-10-02 JJK   Added clear of buttons after successful Paypal approval
+ *                  and call of handlePayment
  *============================================================================*/
 var payDues = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -18,6 +20,7 @@ var payDues = (function () {
     var $PayDuesTitle = $('#PayDuesTitle');
     var $PayDuesTitle2 = $('#PayDuesTitle2');
     var $PayDuesMessage = $('#PayDuesMessage');
+    var $PayDuesButtons = $('#paypal-button-container');
 
     $PayDuesTitle.empty();
     $PayDuesTitle2.empty();
@@ -79,6 +82,8 @@ var payDues = (function () {
                         return fetch('hoadb/handlePayment.php?orderID='+data.orderID)
                         .then(function (response) {
                             //console.log(response);
+                            // After successful recording of payment, clear the paypal buttons
+                            $PayDuesButtons.empty();
                             // Check the status of the reponse (400 or 500 errors)
                             if (response.ok) {
                                 // if response and JSON are OK, return the JSON object part of the fetch response to the next promise
