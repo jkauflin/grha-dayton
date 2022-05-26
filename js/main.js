@@ -58,7 +58,11 @@ var main = (function () {
     // Respond to the Search button click (because I can't figure out how to combine it with input change)
     $document.on("click", "#DuesSearchButton", function () {
         $("#PropertyListDisplay tbody").html("");
-        util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
+        if ($("#address").val() !== undefined) {
+            util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
+        } else {
+            console.log("undefined");
+        }
     });
 
     $document.on("click", ".DuesStatement", function () {

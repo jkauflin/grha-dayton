@@ -233,7 +233,7 @@
         }
 
         var urlParamStr = getParamDatafromInputs(inDiv, paramMap, false);
-        //console.log(`>>> urlParamStr = ${urlParamStr}`);
+        console.log(`>>> urlParamStr = ${urlParamStr}`);
         fetch(url+urlParamStr)
         .then(response => response.text())
         .then(responseData => {
@@ -295,12 +295,13 @@
             paramSeperator = ';';
         }
 
-        if (inDiv !== null) {
+        if (inDiv !== null && inDiv !== undefined) {
             // Get all the input objects within the DIV
             var InputsDiv;
             if (typeof inDiv === "string") {
                 InputsDiv = $("#" + inDiv);
             } else {
+                // *** make sure it's a proper JQuery object???
                 InputsDiv = inDiv;
             }
             var FormInputs = InputsDiv.find("input,textarea,select");
