@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fad8b457aee412552a20704b668a5e93",
+    "content-hash": "143d0fd406a1aaec2938c124585292b4",
     "packages": [
         {
             "name": "jkauflin/jjkgallery",
-            "version": "v1.1.6",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jkauflin/MediaGallery.git",
-                "reference": "e4267780c44f52035abab9d52e6bb21e30075ece"
+                "reference": "29615e9ecc8325b6f85e7dde3a0151fdb99064d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/e4267780c44f52035abab9d52e6bb21e30075ece",
-                "reference": "e4267780c44f52035abab9d52e6bb21e30075ece",
+                "url": "https://api.github.com/repos/jkauflin/MediaGallery/zipball/29615e9ecc8325b6f85e7dde3a0151fdb99064d5",
+                "reference": "29615e9ecc8325b6f85e7dde3a0151fdb99064d5",
                 "shasum": ""
             },
             "type": "project",
@@ -39,9 +39,9 @@
             "description": "Web Media Gallery display for photos, videos, music, and docs",
             "support": {
                 "issues": "https://github.com/jkauflin/MediaGallery/issues",
-                "source": "https://github.com/jkauflin/MediaGallery/tree/v1.1.6"
+                "source": "https://github.com/jkauflin/MediaGallery/tree/v2.0.0"
             },
-            "time": "2021-05-31T17:53:52+00:00"
+            "time": "2022-05-22T14:27:10+00:00"
         }
     ],
     "packages-dev": [],

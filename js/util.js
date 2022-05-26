@@ -1,7 +1,8 @@
 /*==============================================================================
- * (C) Copyright 2015,2016,2017,2018 John J Kauflin, All rights reserved. 
+ * (C) Copyright 2015,2016,2017,2022 John J Kauflin, All rights reserved. 
  *----------------------------------------------------------------------------
- * DESCRIPTION: 
+ * DESCRIPTION:  Common JS functions for any web app to augment bootstrap
+ *               displays and form field/update functions
  *----------------------------------------------------------------------------
  * Modification History
  * 2015-03-06 JJK 	Initial version 
@@ -16,11 +17,30 @@
  * 2018-10-28 JJK   Went back to declaring variables in the functions
  * 2018-11-01 JJK   Modified getJSONfromInputs to only include elements with
  *                  an Id and check for checkbox "checked"
- * 2019-09-22 JJK   Checked logic for dues emails and communications
- * 2020-08-03 JJK   Removed ajaxError handling - error handling re-factor
- *                  Moved result.error check and message display to the
- *                  individual calls
- * 2020-12-22 JJK   Re-factored for Bootstrap 4, and added displayTabPage
+ * 2018-12-19 JJK   Added functions to abstract screen activities such as
+ *                  display, search, edit, and update
+ * 2019-09-28 JJK   Modified the JSON inputs method to accept DEV object
+ *                  or name string.  Modified the AJAX calls to use new
+ *                  promises to check result
+ * 2022-05-15 JJK   Updating for bootstrap 5 and Fetch (and to be a good
+ *                  general set of utility function for any web app).
+ *                  Removed email address regedit (bootstrap 5 validates)
+ *                  Removed cursor stuff
+ * 2022-05-18 JJK   Added 2 functions (updateJSONfromInputs, updateTEXTfromInputs)
+ *                  to handle Update requests to services using Fetch with POST 
+ *                  and JSON structure in Request body.  Makes use of the existing
+ *                  getJSONfromInputs function, and it does the thing I have
+ *                  always wanted to which is to parse the response to see if
+ *                  it is JSON or non-JSON if there was some kind of Exception.
+ *                  *** Philosophy is to NOT count on elements in the UI DOM,
+ *                  but to pass elements to functions if we want them to set
+ *                  display elements in the DOM.  The update functions will
+ *                  write details to the console.log and pop-up alerts if
+ *                  a display element is not specified.
+ *                  Added fetchData along the same pattern lines
+ * 2022-05-25 JJK   Created getParamDatafromInputs for both JSON and url
+ *                  param string and implemented in fetch and update
+ *                  (Changed getJSONfromInputs to call new getParamDatafromInputs)
  *============================================================================*/
  var util = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -29,18 +49,23 @@
 
     //=================================================================================================================
     // Variables cached from the DOM
-    var $document = $(document);
+
+    //=================================================================================================================
+    // Bind events
 
     //=================================================================================================================
     // Module methods
-    function displayTabPage(targetTab) {
-        var targetTabPage = targetTab + 'Page';
-        // Remove the active class on the current active tab
-        $(".nav-link.active").removeClass("active");
-        // Show the target tab page
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
-        // Make the target tab page active
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
+    function currTime() {
+        const options = {
+            //timeZone: "Africa/Accra",
+            //hour12: true,
+            //hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        };
+
+        var tempDate = new Date();
+        return tempDate.toLocaleTimeString("en-US", options);
     }
 
     function sleep(milliseconds) {
@@ -109,6 +134,15 @@
         return tempDate.getFullYear() + '-' + tempMonth + '-' + tempDay;
     }
 
+    function formatDatetime(inDate) {
+        var td = inDate;
+        if (td == null) {
+            td = new Date();
+        }
+        var formattedDate = formatDate(td);
+        return `${formattedDate} ${td.getHours()}:${td.getMinutes()}:${td.getSeconds()}.${td.getMilliseconds()}`;
+    }
+
     // Helper functions for setting UI components from data
     function setBoolText(inBool) {
         var tempStr = "NO";
@@ -132,14 +166,32 @@
         }
         return '<input id="' + idName + '" type="checkbox" ' + tempStr + '>';
     }
+
+/* Bootstrap 5 form input fields
+            <form id="InputValues" action="#">
+                <div class="row">
+                    <div class="col p-0">
+                        <div class="form-floating m-1">
+                            <input id="targetTemperature" type="number" class="form-control">
+                            <label for="targetTemperature">Target temp</label>
+                        </div>
+                        <div class="form-floating m-1">
+                            <input id="desc" type="text" class="form-control">
+                            <label for="desc">Description</label>
+                        </div>
+                        <div class="form-floating m-1">
+                            <input id="germinationDate" type="date" class="form-control">
+                            <label for="germinationDate">Germination date</label>
+                        </div>
+                    </div>
+                </div><!-- end of row -->
+            </form>
+*/
     function setInputText(idName, textVal, textSize) {
         return '<input id="' + idName + '" name="' + idName + '" type="text" class="form-control input-sm resetval" value="' + textVal + '" size="' + textSize + '" maxlength="' + textSize + '">';
     }
     function setTextArea(idName, textVal, rows) {
         return '<textarea id="' + idName + '" class="form-control input-sm" rows="' + rows + '">' + textVal + '</textarea>';
-    }
-    function setTextArea2(idName, textVal, rows, cols) {
-        return '<textarea id="' + idName + '" class="form-control input-sm" rows="' + rows + '" cols="' + cols + '">' + textVal + '</textarea>';
     }
     function setInputDate(idName, textVal, textSize) {
         return '<input id="' + idName + '" type="text" class="form-control input-sm Date" value="' + textVal + '" size="' + textSize + '" maxlength="' + textSize + '" placeholder="YYYY-MM-DD">';
@@ -154,14 +206,103 @@
         return tempStr;
     }
 
-    // Function to get all input objects within a DIV, and extra entries from a map
-    // and construct a JSON object with names and values (to pass in POST updates)
-    function getJSONfromInputs(InputsDiv, paramMap) {
-        var first = true;
-        var jsonStr = '{';
 
-        if (InputsDiv !== null) {
+    //=============================================================================================
+    // Function to request a JSON data structure for a service url using Fetch instead of AJAX,
+    // and handling JSON parse errors, as well as diplay elements and render function call
+    // Parameters:
+    //   url - path to the service to call
+    //   jsonType - boolean indicating expected format of response data (TRUE = JSON, FALSE = TEXT)
+    //   messageDiv - DIV (JQuery object or String name) to display status messages
+    //   renderFunction - Pointer to a function that will do UI rendering of the JSON object data
+    //=============================================================================================
+    function fetchData(url, inDiv, jsonType=true, messageDiv=null, renderFunction=null, paramMap=null) {
+        // Check if a message element was specified
+        var displayMessage = false;
+        if (messageDiv !== null) {
+            displayMessage = true;
             // Get all the input objects within the DIV
+            var MessageDiv;
+            if (messageDiv instanceof String) {
+                MessageDiv = $("#" + messageDiv);
+            } else {
+                MessageDiv = messageDiv;
+            }
+            // Clear out the display message element
+            MessageDiv.html("");
+        }
+
+        var urlParamStr = getParamDatafromInputs(inDiv, paramMap, false);
+        //console.log(`>>> urlParamStr = ${urlParamStr}`);
+        fetch(url+urlParamStr)
+        .then(response => response.text())
+        .then(responseData => {
+            // Successful response, check for JSON format
+            //console.log('Successful response: ', responseData);
+            try {
+                if (jsonType) {
+                    // Parse the response data to see if it is JSON
+                    var jsonObject = JSON.parse(responseData);
+                    //console.log("Valid JSON string");
+                    // If a render function was specified, render the data in the JSON object
+                    if (renderFunction != null) {
+                        renderFunction(jsonObject);
+                    }
+                } else {
+                    // if NOT JSON, then display the response TEXT in the message element
+                    if (displayMessage) {
+                        MessageDiv.html(responseData);
+                    }
+                }
+            } catch (error) {
+                console.error(`Error in Fetch data request to ${url}, response = ${responseData}`);
+                if (displayMessage) {
+                    MessageDiv.html("Fetch data FAILED - check log");
+                } else {
+                    alert(`Error in request to ${url} - check log`);
+                }
+            }
+        })
+        .catch((error) => {
+            console.error(`Error in request to ${url}, error = `, error);
+            if (displayMessage) {
+                MessageDiv.html("Error in Fetch data request - check log");
+            } else {
+                alert(`Error in Fetch data request to ${url} - check log`);
+            }
+        });
+    }
+
+    //=============================================================================================
+    // Function to get all input objects within a DIV, and extra entries from a map
+    // and construct output string with names and values
+    // 2018-08-31 JJK - Modified to check for input DIV name string or object
+    // 2022-05-25 JJK - Added option for JSON or url param string
+    // Parameters:
+    //   inDiv - DIV (JQuery object or String name) with input fields to include in JSON inputs
+    //   paramMap - Structure holding extra parameters to include
+    //   jsonOutput - true or false (false means url param string starting with ?)
+    //=============================================================================================
+    function getParamDatafromInputs(inDiv, paramMap, jsonOutput=true) {
+        var first = true;
+        var paramData = '';
+        var paramSeperator = '';
+        if (jsonOutput) {
+            paramData = '{';
+            paramSeperator = ',';
+        } else {
+            paramData = '?';
+            paramSeperator = ';';
+        }
+
+        if (inDiv !== null) {
+            // Get all the input objects within the DIV
+            var InputsDiv;
+            if (typeof inDiv === "string") {
+                InputsDiv = $("#" + inDiv);
+            } else {
+                InputsDiv = inDiv;
+            }
             var FormInputs = InputsDiv.find("input,textarea,select");
 
             // Loop through the objects and construct the JSON string
@@ -173,18 +314,32 @@
                     if (first) {
                         first = false;
                     } else {
-                        jsonStr += ',';
+                        paramData += paramSeperator;
                     }
                     //console.log("id = " + $(this).attr('id') + ", type = " + $(this).attr("type"));
                     if ($(this).attr("type") == "checkbox") {
                         //console.log("id = " + $(this).attr('id') + ", $(this).prop('checked') = " + $(this).prop('checked'));
                         if ($(this).prop('checked')) {
-                            jsonStr += '"' + $(this).attr('id') + '" : 1';
+                            if (jsonOutput) {
+                                paramData += '"' + $(this).attr('id') + '" : 1';
+                            } else {
+                                paramData += $(this).attr('id') + '=1';
+                            }
+                    
                         } else {
-                            jsonStr += '"' + $(this).attr('id') + '" : 0';
+                            if (jsonOutput) {
+                                paramData += '"' + $(this).attr('id') + '" : 0';
+                            } else {
+                                paramData += $(this).attr('id') + '=0';
+                            }
                         }
                     } else {
-                        jsonStr += '"' + $(this).attr('id') + '" : "' + cleanStr($(this).val()) + '"';
+                        if (jsonOutput) {
+                            paramData += '"' + $(this).attr('id') + '" : "' + cleanStr($(this).val()) + '"';
+                        } else {
+                            paramData += $(this).attr('id') + '=' + cleanStr($(this).val());
+                        }
+                
                     }
                 }
             });
@@ -195,35 +350,137 @@
                 if (first) {
                     first = false;
                 } else {
-                    jsonStr += ',';
+                    paramData += paramSeperator;
                 }
-                jsonStr += '"' + key + '" : "' + value + '"';
+                if (jsonOutput) {
+                    paramData += '"' + key + '" : "' + value + '"';
+                } else {
+                    paramData += key + '=' + value;
+                }
             });
         }
 
-        jsonStr += '}';
-        return jsonStr;
+        if (jsonOutput) {
+            paramData += '}';
+        }
+
+        return paramData;
     }
 
+    //=============================================================================================
+    // 2022-05-25 JJK   Modified the original function to call the new function with the default
+    //                  of JSON = true
+    //=============================================================================================
+    function getJSONfromInputs(inDiv, paramMap) {
+        return getParamDatafromInputs(inDiv, paramMap);
+    }
+
+    //=============================================================================================
+    // Function to execute an update service using a Fetch POST of a JSON structure and getting
+    //      a JSON structure back, with proper error handling on the JSON parse, as well as 
+    //      diplay elements and render function call
+    // Parameters:
+    //   url - path to the service to call
+    //   inDiv - DIV (JQuery object or String name) with input fields to include in JSON inputs
+    //   jsonType - boolean indicating expected format of response data (TRUE = JSON, FALSE = TEXT)
+    //   messageDiv - DIV (JQuery object or String name) to display status messages
+    //   renderFunction - Pointer to a function that will do UI rendering of the JSON object data
+    //   paramMap - Structure holding extra parameters to include
+    //=============================================================================================
+    function updateData(url, inDiv, jsonType=true, messageDiv=null, renderFunction=null, paramMap=null) {
+        // Check if a message element was specified
+        var displayMessage = false;
+        if (messageDiv !== null) {
+            displayMessage = true;
+            // Get all the input objects within the DIV
+            var MessageDiv;
+            if (messageDiv instanceof String) {
+                MessageDiv = $("#" + messageDiv);
+            } else {
+                MessageDiv = messageDiv;
+            }
+            MessageDiv.html("");
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: getParamDatafromInputs(inDiv, paramMap)
+        })
+        .then(response => response.text())
+        .then(responseData => {
+            // Successful response, check for JSON format
+            //console.log('Successful response: ', responseData);
+            try {
+                var returnText = "Update successful";
+                if (jsonType) {
+                    // Parse the response data to see if it is JSON
+                    var jsonObject = JSON.parse(responseData);
+                    //console.log("Valid JSON string");
+                    // If a render function was specified, render the data in the JSON object
+                    if (renderFunction != null) {
+                        renderFunction(jsonObject);
+                    }
+                    // Check if there is a display message in the JSON
+                    // if it's not NULL and non-blank use it instead of the general "Update successful" message???
+                } else {
+                    if (responseData != null && responseData.length > 0) {
+                        returnText = responseData;
+                    }
+                }
+
+                if (displayMessage) {
+                    MessageDiv.html(returnText);
+                }
+
+            } catch (error) {
+                console.error(`Error in request to ${url}, response = ${responseData}`);
+                if (displayMessage) {
+                    MessageDiv.html("Update FAILED - check log");
+                } else {
+                    alert(`Error in request to ${url} - check log`);
+                }
+            }
+        })
+        .catch((error) => {
+            console.error(`Error in request to ${url}, error = `, error);
+            if (displayMessage) {
+                MessageDiv.html("Error in Update - check log");
+            } else {
+                alert(`Error in request to ${url} - check log`);
+            }
+        });
+    }
+
+    function log(inStr) {
+        console.log(formatDatetime + " " + inStr);
+    }
+    
     //=================================================================================================================
     // This is what is exposed from this Module
     return {
-        displayTabPage,
-        sleep:              sleep,
-        urlParam:           urlParam,
-        cleanStr:           cleanStr,
-        csvFilter:          csvFilter,
-        formatMoney:        formatMoney,
-        formatDate:         formatDate,
-        setBoolText:        setBoolText,
-        setCheckbox:        setCheckbox,
-        setCheckboxEdit:    setCheckboxEdit,
-        setInputText:       setInputText,
-        setTextArea:        setTextArea,
-        setTextArea2,
-        setInputDate:       setInputDate,
-        setSelectOption:    setSelectOption,
-        getJSONfromInputs:  getJSONfromInputs
+        sleep,
+        urlParam,
+        cleanStr,
+        csvFilter,
+        formatMoney,
+        formatDate,
+        formatDate,
+        formatDatetime,
+        setBoolText,
+        setCheckbox,
+        setCheckboxEdit,
+        setInputText,
+        setTextArea,
+        setInputDate,
+        setSelectOption,
+        fetchData,
+        getParamDatafromInputs,
+        getJSONfromInputs,
+        updateData,
+        log
     };
         
 })(); // var util = (function(){

@@ -29,41 +29,36 @@ var main = (function () {
 	//=================================================================================================================
     // Bind events
     // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-    $(".navbar-nav li a:not('.dropdown-toggle')").on('click', function () { 
-        $('.navbar-collapse').collapse('hide'); 
-    });
+    $('.navbar-collapse a').click(function(){
+		$(".navbar-collapse").collapse('hide');
+	});
 
     // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
     $document.on("click", ".link-tile-tab", function (event) {
         var $this = $(this);
         event.preventDefault();
         var targetTab = $this.attr('data-dir');
-        util.displayTabPage(targetTab);
+        displayTabPage(targetTab);
     });
+
 
     // Check if a Tab name is passed as a parameter on the URL and navigate to it
     var results = new RegExp('[\?&]tab=([^&#]*)').exec(window.location.href);
     if (results != null) {
         var tabName = results[1] || 0;
-        util.displayTabPage(tabName);
+        displayTabPage(tabName);
     }
 
     // Respond to any change in values and call service
     $("#DuesSearchInput").change(function () {
         $("#PropertyListDisplay tbody").html("");
-        // Get the list
-        $.getJSON("hoadb/getHoaPropertiesList2.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
-            displayPropertyList(hoaPropertyRecList);
-        });
+        util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
     });
 
     // Respond to the Search button click (because I can't figure out how to combine it with input change)
     $document.on("click", "#DuesSearchButton", function () {
         $("#PropertyListDisplay tbody").html("");
-        // Get the list
-        $.getJSON("hoadb/getHoaPropertiesList2.php", "address=" + $("#address").val(), function (hoaPropertyRecList) {
-            displayPropertyList(hoaPropertyRecList);
-        });
+        util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
     });
 
     $document.on("click", ".DuesStatement", function () {
@@ -71,9 +66,23 @@ var main = (function () {
         $.getJSON("hoadb/getHoaDbData2.php", "parcelId=" + $this.attr("data-parcelId"), function (hoaRec) {
             formatDuesStatementResults(hoaRec);
             // Display the modal window with the iframe
-            $("#duesStatementModal").modal("show");
         });
+        $("#duesStatementModal").modal("show");
     });
+
+
+    //=================================================================================================================
+	// Module methods
+	function displayTabPage(targetTab) {
+        var targetTabPage = targetTab + 'Page';
+        // Remove the active class on the current active tab
+        $(".nav-link.active").removeClass("active");
+        // Show the target tab page
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
+        // Make the target tab page active
+        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
+    }
+
 
     function displayPropertyList(hoaPropertyRecList) {
         var tr = '<tr><td>No records found - try different search parameters</td></tr>';
