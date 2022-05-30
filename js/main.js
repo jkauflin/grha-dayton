@@ -49,29 +49,55 @@ var main = (function () {
         displayTabPage(tabName);
     }
 
-    // Respond to any change in values and call service
-    $("#DuesSearchInput").change(function () {
-        $("#PropertyListDisplay tbody").html("");
-        util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
-    });
 
-    // Respond to the Search button click (because I can't figure out how to combine it with input change)
-    $document.on("click", "#DuesSearchButton", function () {
-        $("#PropertyListDisplay tbody").html("");
-        if ($("#address").val() !== undefined) {
-            util.fetchData('hoadb/getHoaPropertiesList2.php','InputValues',true,null,displayPropertyList);
-        } else {
-            console.log("undefined");
+    document.getElementById("InputValues").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("DuesSearchButton").click();
         }
     });
 
-    $document.on("click", ".DuesStatement", function () {
-        var $this = $(this);
-        $.getJSON("hoadb/getHoaDbData2.php", "parcelId=" + $this.attr("data-parcelId"), function (hoaRec) {
-            formatDuesStatementResults(hoaRec);
-            // Display the modal window with the iframe
+    document.getElementById("DuesSearchButton").addEventListener("click", function () {
+        let url = 'hoadb/getHoaPropertiesList2.php';
+        util.fetchData(url,'InputValues',true,null, function(err, data) {
+            if (err) {
+              console.error(`Error in Fetch data request to ${url}, ${err}`);
+              document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
+              return;
+            }
+            displayPropertyList(data);
         });
-        $("#duesStatementModal").modal("show");
+    });
+
+    //document.getElementById("myBtn").addEventListener("click", displayDate);
+    //element.addEventListener("click", function(){ myFunction(p1, p2); });
+    //addEventListener(event, function, useCapture);
+    //    The default value is false, which will use the bubbling propagation, 
+    // when the value is set to true, the event uses the capturing propagation.
+    // Event propagation cannot be controlled by onclick.
+    //document.getElementById("myBtn").onclick
+/*
+var classname = document.getElementsByClassName("DuesStatement");
+var myFunction = function() {
+    alert("in myFunction");
+};
+for (var i = 0; i < classname.length; i++) {
+    classname[i].addEventListener('click', myFunction, false);
+}
+*/
+    $document.on("click", ".DuesStatement", function () {
+        let url = "hoadb/getHoaDbData2.php?parcelId=" + this.getAttribute("data-parcelId");
+        util.fetchData(url,null,true,null, function(err, hoaRec) {
+            if (err) {
+              console.error(`Error in Fetch data request to ${url}, ${err}`);
+              document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
+              return;
+            }
+            formatDuesStatementResults(hoaRec);
+            new bootstrap.Modal(document.getElementById('duesStatementModal')).show();
+        });
     });
 
 
@@ -91,6 +117,9 @@ var main = (function () {
     function displayPropertyList(hoaPropertyRecList) {
         var tr = '<tr><td>No records found - try different search parameters</td></tr>';
         var rowId = 0;
+
+        // *** convert to javascript and check the data structure first ***
+        
         $.each(hoaPropertyRecList, function (index, hoaPropertyRec) {
             rowId = index + 1;
             if (index == 0) {
@@ -118,9 +147,12 @@ var main = (function () {
     }
 
     function formatDuesStatementResults(hoaRec) {
-        var tr = '';
-        var checkedStr = '';
-        var currSysDate = new Date();
+        let tr = '';
+        let checkedStr = '';
+        let currSysDate = new Date();
+
+        // *** convert to javascript and check the data structure first ***
+
         $("#PayDues").html('');
         $("#PayDuesInstructions").html('');
 
