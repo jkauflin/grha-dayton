@@ -212,49 +212,6 @@
     }
 
 
-    //=============================================================================================
-    // Function to request data (JSON or TEXT) for a service url using Fetch instead of AJAX,
-    // and handling JSON parse errors
-    // Parameters:
-    //   url - path to the service to call
-    //   formName - Form name which includes input fields to include in query
-    //   jsonType - boolean indicating expected format of response data (TRUE = JSON, FALSE = TEXT)
-    //   paramMap - Structure holding extra parameters to include
-    //   callbackFunction - function to be called when this function is done
-    // Returns (to the callback function):
-    //   retError = null if successful, non-null error if NOT successful
-    //   retData = return data if successful, null if NOT successful
-    //=============================================================================================
-    function fetchData(url, formName, jsonType, paramMap, callbackFunction) {
-        let retError = null;
-        let retData = null;
-
-        var urlParamStr = getParamDatafromInputs(formName, paramMap, false);
-        //console.log(`>>> in FetchData url = ${url}, urlParamStr = ${urlParamStr}`);
-        fetch(url+urlParamStr)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Response was not OK');
-            }
-            return response.text();
-        })
-        .then(responseData => {
-            retData = responseData;
-            try {
-                if (jsonType) {
-                    // Parse the response data to see if it is JSON
-                    retData = JSON.parse(responseData);
-                }
-            } catch (error) {
-                retError = 'Error parsing response, data = ' + responseData;
-                callbackFunction(retError,null);
-            }
-            callbackFunction(retError,retData);
-        })
-        .catch((error) => {
-            callbackFunction(error,null);
-        });
-    }
 
     //=============================================================================================
     // Function to get all input objects within a DIV, and extra entries from a map
@@ -266,7 +223,7 @@
     //   paramMap - Structure holding extra parameters to include
     //   jsonOutput - true or false (false means url param string starting with ?)
     //=============================================================================================
-    function getParamDatafromInputs(formName, paramMap, jsonOutput=true) {
+    function getParamDatafromInputs(formName, paramMap=null, jsonOutput=true) {
         let first = true;
         let paramData = '';
         let paramSeperator = '';
@@ -371,84 +328,6 @@
         return getParamDatafromInputs(formName, paramMap);
     }
 
-    //=============================================================================================
-    // Function to execute an update service using a Fetch POST of a JSON structure and getting
-    //      a JSON structure back, with proper error handling on the JSON parse, as well as 
-    //      diplay elements and render function call
-    // Parameters:
-    //   url - path to the service to call
-    //   formName - Form name which includes input fields to include in query
-    //   jsonType - boolean indicating expected format of response data (TRUE = JSON, FALSE = TEXT)
-    //   messageId - DIV (JQuery object or String name) to display status messages
-    //   renderFunction - Pointer to a function that will do UI rendering of the JSON object data
-    //   paramMap - Structure holding extra parameters to include
-    //=============================================================================================
-    function updateData(url, formName, jsonType=true, messageId=null, renderFunction=null, paramMap=null) {
-        // Check if a message element was specified
-        var displayMessage = false;
-        if (messageId !== null) {
-            displayMessage = true;
-            // Get all the input objects within the DIV
-            var messageId;
-            if (messageId instanceof String) {
-                messageId = $("#" + messageId);
-            } else {
-                messageId = messageId;
-            }
-            messageId.html("");
-        }
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: getParamDatafromInputs(formName, paramMap)
-        })
-        .then(response => response.text())
-        .then(responseData => {
-            // Successful response, check for JSON format
-            //console.log('Successful response: ', responseData);
-            try {
-                var returnText = "Update successful";
-                if (jsonType) {
-                    // Parse the response data to see if it is JSON
-                    var jsonObject = JSON.parse(responseData);
-                    //console.log("Valid JSON string");
-                    // If a render function was specified, render the data in the JSON object
-                    if (renderFunction != null) {
-                        renderFunction(jsonObject);
-                    }
-                    // Check if there is a display message in the JSON
-                    // if it's not NULL and non-blank use it instead of the general "Update successful" message???
-                } else {
-                    if (responseData != null && responseData.length > 0) {
-                        returnText = responseData;
-                    }
-                }
-
-                if (displayMessage) {
-                    messageId.html(returnText);
-                }
-
-            } catch (error) {
-                console.error(`Error in request to ${url}, response = ${responseData}`);
-                if (displayMessage) {
-                    messageId.html("Update FAILED - check log");
-                } else {
-                    alert(`Error in request to ${url} - check log`);
-                }
-            }
-        })
-        .catch((error) => {
-            console.error(`Error in request to ${url}, error = `, error);
-            if (displayMessage) {
-                messageId.html("Error in Update - check log");
-            } else {
-                alert(`Error in request to ${url} - check log`);
-            }
-        });
-    }
 
     function log(inStr) {
         console.log(formatDatetime + " " + inStr);
@@ -472,10 +351,8 @@
         setTextArea,
         setInputDate,
         setSelectOption,
-        fetchData,
         getParamDatafromInputs,
         getJSONfromInputs,
-        updateData,
         log
     };
         

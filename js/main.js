@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2015,2020,2021 John J Kauflin, All rights reserved.
+ * (C) Copyright 2015,2020,2021,2022 John J Kauflin, All rights reserved.
  *----------------------------------------------------------------------------
  * DESCRIPTION:
  *----------------------------------------------------------------------------
@@ -18,6 +18,7 @@
  * 2020-03-15 JJK   Moved the dues stuff to dues.js
  * 2020-12-21 JJK   Moved dues stuff back here and added link-time handling
  * 2021-01-02 JJK   Modified for new Paypal API rather than smart button
+ * 2022-05-31 JJK   Modified to use new fetch logic for service calls
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -61,42 +62,45 @@ var main = (function () {
 
     document.getElementById("DuesSearchButton").addEventListener("click", function () {
         let url = 'hoadb/getHoaPropertiesList2.php';
-        util.fetchData(url,'InputValues',true,null, function(err, data) {
-            if (err) {
-              console.error(`Error in Fetch data request to ${url}, ${err}`);
-              document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
-              return;
+        let urlParamStr = util.getParamDatafromInputs('InputValues', null, false);
+        //console.log(`>>> in FetchData url = ${url}, urlParamStr = ${urlParamStr}`);
+        fetch(url+urlParamStr)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Response was not OK');
             }
+            return response.json();
+        })
+        .then(data => {
             displayPropertyList(data);
+        })
+        .catch((err) => {
+            console.error(`Error in Fetch to ${url}, ${err}`);
+            document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
         });
     });
 
-    //document.getElementById("myBtn").addEventListener("click", displayDate);
-    //element.addEventListener("click", function(){ myFunction(p1, p2); });
-    //addEventListener(event, function, useCapture);
-    //    The default value is false, which will use the bubbling propagation, 
-    // when the value is set to true, the event uses the capturing propagation.
-    // Event propagation cannot be controlled by onclick.
-    //document.getElementById("myBtn").onclick
-/*
-var classname = document.getElementsByClassName("DuesStatement");
-var myFunction = function() {
-    alert("in myFunction");
-};
-for (var i = 0; i < classname.length; i++) {
-    classname[i].addEventListener('click', myFunction, false);
-}
-*/
     $document.on("click", ".DuesStatement", function () {
-        let url = "hoadb/getHoaDbData2.php?parcelId=" + this.getAttribute("data-parcelId");
-        util.fetchData(url,null,true,null, function(err, hoaRec) {
-            if (err) {
-              console.error(`Error in Fetch data request to ${url}, ${err}`);
-              document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
-              return;
+        let url = "hoadb/getHoaDbData2.php";
+        let paramMap = new Map();
+        paramMap.set('parcelId', this.getAttribute("data-parcelId"));
+
+        let urlParamStr = util.getParamDatafromInputs(null, paramMap, false);
+        //console.log(`>>> in FetchData url = ${url}, urlParamStr = ${urlParamStr}`);
+        fetch(url+urlParamStr)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Response was not OK');
             }
-            formatDuesStatementResults(hoaRec);
+            return response.json();
+        })
+        .then(data => {
+            formatDuesStatementResults(data);
             new bootstrap.Modal(document.getElementById('duesStatementModal')).show();
+        })
+        .catch((err) => {
+            console.error(`Error in Fetch to ${url}, ${err}`);
+            document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
         });
     });
 
