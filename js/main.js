@@ -19,6 +19,8 @@
  * 2020-12-21 JJK   Moved dues stuff back here and added link-time handling
  * 2021-01-02 JJK   Modified for new Paypal API rather than smart button
  * 2022-05-31 JJK   Modified to use new fetch logic for service calls
+ * 2022-06-01 JJK   Moved navbar tab stuff to navtab.js, and implement
+ *                  vanilla javascript handling of duesStatement clicks
  *============================================================================*/
 var main = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
@@ -29,27 +31,13 @@ var main = (function () {
 
 	//=================================================================================================================
     // Bind events
-    // Auto-close the collapse menu after clicking a non-dropdown menu item (in the bootstrap nav header)
-    $('.navbar-collapse a').click(function(){
-		$(".navbar-collapse").collapse('hide');
-	});
 
-    // Click on a link-tile will remove the active from the current tab, show the new tab and make it active
-    $document.on("click", ".link-tile-tab", function (event) {
-        var $this = $(this);
-        event.preventDefault();
-        var targetTab = $this.attr('data-dir');
-        displayTabPage(targetTab);
+    // Listen to clicks on the Body and look for specific classes for handling
+    document.body.addEventListener("click", function (event) {
+        if (event.target && event.target.classList.contains("DuesStatement")) {
+            getDuesStatement(event.target);
+        }
     });
-
-
-    // Check if a Tab name is passed as a parameter on the URL and navigate to it
-    var results = new RegExp('[\?&]tab=([^&#]*)').exec(window.location.href);
-    if (results != null) {
-        var tabName = results[1] || 0;
-        displayTabPage(tabName);
-    }
-
 
     document.getElementById("InputValues").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
@@ -80,43 +68,9 @@ var main = (function () {
         });
     });
 
-    $document.on("click", ".DuesStatement", function () {
-        let url = "hoadb/getHoaDbData2.php";
-        let paramMap = new Map();
-        paramMap.set('parcelId', this.getAttribute("data-parcelId"));
-
-        let urlParamStr = util.getParamDatafromInputs(null, paramMap, false);
-        //console.log(`>>> in FetchData url = ${url}, urlParamStr = ${urlParamStr}`);
-        fetch(url+urlParamStr)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Response was not OK');
-            }
-            return response.json();
-        })
-        .then(data => {
-            formatDuesStatementResults(data);
-            new bootstrap.Modal(document.getElementById('duesStatementModal')).show();
-        })
-        .catch((err) => {
-            console.error(`Error in Fetch to ${url}, ${err}`);
-            document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
-        });
-    });
-
 
     //=================================================================================================================
 	// Module methods
-	function displayTabPage(targetTab) {
-        var targetTabPage = targetTab + 'Page';
-        // Remove the active class on the current active tab
-        $(".nav-link.active").removeClass("active");
-        // Show the target tab page
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').tab('show')
-        // Make the target tab page active
-        $('.navbar-nav a[href="#'+targetTabPage+'"]').addClass('active');
-    }
-
 
     function displayPropertyList(hoaPropertyRecList) {
         var tr = '<tr><td>No records found - try different search parameters</td></tr>';
@@ -148,6 +102,29 @@ var main = (function () {
         });
 
         $("#PropertyListDisplay tbody").html(tr);
+    }
+
+    function getDuesStatement(element) {
+        let url = "hoadb/getHoaDbData2.php";
+        let paramMap = new Map();
+        paramMap.set('parcelId', element.getAttribute("data-parcelId"));
+
+        let urlParamStr = util.getParamDatafromInputs(null, paramMap, false);
+        fetch(url+urlParamStr)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Response was not OK');
+            }
+            return response.json();
+        })
+        .then(data => {
+            formatDuesStatementResults(data);
+            new bootstrap.Modal(document.getElementById('duesStatementModal')).show();
+        })
+        .catch((err) => {
+            console.error(`Error in Fetch to ${url}, ${err}`);
+            document.getElementById("MessageDisplay").innerHTML = "Fetch data FAILED - check log";
+        });
     }
 
     function formatDuesStatementResults(hoaRec) {
