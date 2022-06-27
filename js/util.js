@@ -46,6 +46,7 @@
  *                  better error handling (the Catch catches error in the 
  *                  main callback function after the fetch).
  *                  Moved display functions back to the main callback function
+ * 2022-06-26 JJK   Added empty function to remove all children from nodes
  *============================================================================*/
  var util = (function(){
     'use strict';  // Force declaration of variables before use (among other things)
@@ -60,6 +61,7 @@
 
     //=================================================================================================================
     // Module methods
+
     function currTime() {
         const options = {
             //timeZone: "Africa/Accra",
@@ -328,6 +330,15 @@
         return getParamDatafromInputs(formName, paramMap);
     }
 
+    // Remove all child nodes from an element
+    function empty(node) {
+        // Could just set the innerHTML to null, but they say removing the children is faster
+        // and better for removing any associated events
+        //node.innerHTML = "";
+        while (node.firstChild) {
+            node.removeChild(node.firstChild)
+        }
+    }
 
     function log(inStr) {
         console.log(formatDatetime + " " + inStr);
@@ -353,6 +364,7 @@
         setSelectOption,
         getParamDatafromInputs,
         getJSONfromInputs,
+        empty,
         log
     };
         

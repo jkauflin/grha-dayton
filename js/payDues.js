@@ -1,5 +1,5 @@
 /*==============================================================================
- * (C) Copyright 2015,2020 John J Kauflin, All rights reserved.
+ * (C) Copyright 2015,2022 John J Kauflin, All rights reserved.
  *----------------------------------------------------------------------------
  * DESCRIPTION:  Javascript for the page that present the buttons to
  *               make an online payment for dues
@@ -11,19 +11,28 @@
  * 2021-07-17 JJK   Added money format around processing fee
  * 2021-10-02 JJK   Added clear of buttons after successful Paypal approval
  *                  and call of handlePayment
+ * 2022-06-26 JJK   Convert to vanilla javascript (no dependence on JQuery)
  *============================================================================*/
 var payDues = (function () {
 	'use strict';  // Force declaration of variables before use (among other things)
 
 	//=================================================================================================================
 	// Variables cached from the DOM
+    /*
     var $PayDuesTitle = $('#PayDuesTitle');
     var $PayDuesTitle2 = $('#PayDuesTitle2');
     var $PayDuesMessage = $('#PayDuesMessage');
     var $PayDuesButtons = $('#paypal-button-container');
+    */
+    let payDuesTitle = document.getElementById("PayDuesTitle")
+    let payDuesTitle2 = document.getElementById("PayDuesTitle2")
+    let payDuesMessage = document.getElementById("PayDuesMessage")
+    let payDuesButtons = document.getElementById("paypal-button-container")
 
-    $PayDuesTitle.empty();
-    $PayDuesTitle2.empty();
+    util.empty(payDuesTitle)
+    util.empty(payDuesTitle2)
+    //$PayDuesTitle.empty();
+    //$PayDuesTitle2.empty();
 
     // Check if a Parcel ID is passed as a parameter on the URL
     var results = new RegExp('[\?&]parcelId=([^&#]*)').exec(window.location.href);
@@ -39,21 +48,27 @@ var payDues = (function () {
                 // if response and JSON are OK, return the JSON object part of the fetch response to the next promise
                 return response.json();
             } else {
-                $PayDuesMessage.html("Error is getting data on property");
+                payDuesMessage.textContent = "Error is getting data on property"
+                //$PayDuesMessage.html("Error is getting data on property");
                 throw new Error('Error in response or JSON from server, code = '+response.status);
             }
         })
         .then(function (hoaRec) {
             //console.log("hoaRec.Parcel_ID = "+hoaRec.Parcel_ID);
             if (hoaRec.TotalDue == 0) {
-                $PayDuesMessage.html("No Dues are currently owed on this property");
+                payDuesMessage.textContent = "No Dues are currently owed on this property"
+                //$PayDuesMessage.html("No Dues are currently owed on this property");
             } else if (hoaRec.TotalDue != util.formatMoney(hoaRec.assessmentsList[0].DuesAmt)) {
-                $PayDuesMessage.html("More than current year dues are owed on this property - contact Treasurer");
+                payDuesMessage.textContent = "More than current year dues are owed on this property - contact Treasurer"
+                //$PayDuesMessage.html("More than current year dues are owed on this property - contact Treasurer");
             } else {
                 var paymentValue = hoaRec.TotalDue + hoaRec.paymentFee;
-                $PayDuesTitle.html("Pay HOA dues for property at "+hoaRec.Parcel_Location);
-                $PayDuesTitle2.html("$"+hoaRec.TotalDue+" (Dues) + $"+util.formatMoney(hoaRec.paymentFee)
-                    +" (Processing Fee) = $"+util.formatMoney(paymentValue)+" Total");
+                payDuesTitle.textContent = "Pay HOA dues for property at "+hoaRec.Parcel_Location
+                //$PayDuesTitle.html("Pay HOA dues for property at "+hoaRec.Parcel_Location);
+                payDuesTitle2.textContent = "$"+hoaRec.TotalDue+" (Dues) + $"+util.formatMoney(hoaRec.paymentFee)
+                    +" (Processing Fee) = $"+util.formatMoney(paymentValue)+" Total"
+                //$PayDuesTitle2.html("$"+hoaRec.TotalDue+" (Dues) + $"+util.formatMoney(hoaRec.paymentFee)
+                //+" (Processing Fee) = $"+util.formatMoney(paymentValue)+" Total");
 
                 // Use the Paypal javascript SDK to render buttons for dues payment, and respond to approval
                 paypal.Buttons({
@@ -83,28 +98,37 @@ var payDues = (function () {
                         .then(function (response) {
                             //console.log(response);
                             // After successful recording of payment, clear the paypal buttons
-                            $PayDuesButtons.empty();
+                            util.empty(payDuesButtons)
+                            //$PayDuesButtons.empty();
                             // Check the status of the reponse (400 or 500 errors)
                             if (response.ok) {
                                 // if response and JSON are OK, return the JSON object part of the fetch response to the next promise
                                 return response.json();
                             } else {
-                                $PayDuesMessage.html("Payment made but there was a problem updating HOA records - contact Treasurer");
+                                payDuesMessage.textContent = "Payment made but there was a problem updating HOA records - contact Treasurer"
+                                //$PayDuesMessage.html("Payment made but there was a problem updating HOA records - contact Treasurer");
                                 throw new Error('Error in response or JSON from server, code = '+response.status);
                             }
                             //return response.json();
                         }).then(function (details) {
+                            payDuesMessage.textContent = "Thank you, "+details.result.payer.name.given_name
+                                +".  "+hoaRec.assessmentsList[0].FY+' Dues for property at '+hoaRec.Parcel_Location
+                                +" have been marked as PAID"
+                            /*
                             $PayDuesMessage.html("Thank you, "+details.result.payer.name.given_name
                                 +".  "+hoaRec.assessmentsList[0].FY+' Dues for property at '+hoaRec.Parcel_Location
                                 +" have been marked as PAID");
+                            */
                         })
                     },
                     onCancel: function (data) {
-                        $PayDuesMessage.html("Payment cancelled ");
+                        payDuesMessage.textContent = "Payment cancelled "
+                        //$PayDuesMessage.html("Payment cancelled ");
                     },
                     onError: function (err) {
                         console.log("Error in payment, err = "+err);
-                        $PayDuesMessage.html("Error in payment - contact Treasurer");
+                        payDuesMessage.textContent = "Error in payment - contact Treasurer"
+                        //$PayDuesMessage.html("Error in payment - contact Treasurer");
                     }
                 }).render('#paypal-button-container'); // Display payment options on your web page
 
